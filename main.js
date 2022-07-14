@@ -1,6 +1,6 @@
 // Variables/Constants/Immutables
 const SPEED = 280
-const GRAV = 450
+const GRAV = 456
 const JUMP_FORCE = 480
 const DBUG_INSP = false
 const PLAYER_SCALE = 0.58
@@ -72,7 +72,6 @@ loadSprite("wood", "assets/hitboxes/wood.png")
 loadSprite("background", "assets/screen1.png");
 loadSprite("background2", "assets/screen2.png");
 loadSound("jump", "sound/jump.wav")
-loadSound("ded", "sound/ded.wav")
 loadSound("dash", "sound/dash.wav")
 loadSound("ground", "sound/hitground.wav")
 
@@ -248,9 +247,9 @@ scene("screen2", ({ levelIdx, playerposx }) => {
         '                                                ',
         '=                        #######               =',
         '                         = = = =                ',
-        '=                                              =',
-        '                         = = = =                ',
-        '=                                              =',
+        '=                        = = = =               =',
+        '                                                ',
+        '=                        = = = =               =',
         '                                                ',
         '=                                     #######  =',
         '                                      =======   ',
@@ -261,8 +260,8 @@ scene("screen2", ({ levelIdx, playerposx }) => {
         '=                      ===                     =',
         '                                      -- -      ',
         '=                                     == =     =',    
-        '                 -                    = ==      ',
-        '=           -- - =                             =',
+        '                                      = ==      ',
+        '=           -- - -                             =',
         '            == = =                              ',
         '=            =                                 =',
         '                                                ',
@@ -277,14 +276,14 @@ scene("screen2", ({ levelIdx, playerposx }) => {
         '=                                              =',
         '              - --                              ',
         '=             = ==                             =',
-        '              =                                 ',
-        '=    ==                  ------                =',
+        '     ##       =                                 ',
+        '=    ==                   -----                =',
         '     ==                  == = =                 ',
         '=                        =    =                =',
         '                                                ',
-        '=                       =     =                =',
-        '                                                ',
-        '=                       == = =                 =',
+        '=                        =    =                =',
+        '                         =                      ',
+        '=                        = = =                 =',
         '             ^                                  ',
         '=                                              =',
     ], {
@@ -293,7 +292,7 @@ scene("screen2", ({ levelIdx, playerposx }) => {
         pos: vec2(-30, 31),
         "^": () => [
             sprite("background2", { width: width(), height: height() }),
-            pos(327, -623),
+            pos(334, -623),
             origin("center"),
             scale(1),
             fixed(),
@@ -366,7 +365,7 @@ function playercontlv1(x, y, levelIdx) {
     onKeyPress("v", () => {
         if (SPEEN_ACTIVE === 0) {
         } else if (!player.isGrounded()) {
-            player.jump(JUMP_FORCE)
+            player.jump(JUMP_FORCE + 30)
             play("dash")
             SPEEN_ACTIVE = 0
         } else {
@@ -445,7 +444,7 @@ function playercontlv2(x, y, levelIdx) {
     onKeyPress("v", () => {
         if (SPEEN_ACTIVE === 0) {
         } else if (!player.isGrounded()) {
-            player.jump(JUMP_FORCE)
+            player.jump(JUMP_FORCE + 30)
             play("dash")
             SPEEN_ACTIVE = 0
         } else {
@@ -453,16 +452,12 @@ function playercontlv2(x, y, levelIdx) {
     })
 
     player.onGround(() => {
-        if (SPEEN_ACTIVE === 0) {
+        if (SPEEN_ACTIVE <= 0) {
             player.play("idle")
         } else {
             player.play("swim")
         }
-        if (STARTING_SFX === 0) {
-            STARTING_SFX = 1
-        } else {
-            play("ground")
-        }
+        play("ground")
     })
 
     player.onUpdate(() => {
