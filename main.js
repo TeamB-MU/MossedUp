@@ -3,6 +3,7 @@ const SPEED = 280
 const GRAV = 450
 const JUMP_FORCE = 480
 const DBUG_INSP = false
+const PLAYER_SCALE = 0.58
 let STARTING_SFX = 0
 var REACHED_LEVEL2 = false
 var SPEEN_ACTIVE = 0
@@ -339,7 +340,7 @@ function playercontlv1(x, y, levelIdx) {
     ])
 
     debug.inspect = DBUG_INSP
-    player.scale = 0.58
+    player.scale = PLAYER_SCALE
 
     // Movement Bindings
     onKeyDown("left", () => {
@@ -402,7 +403,7 @@ function playercontlv2(x, y, levelIdx) {
     ])
 
     debug.inspect = DBUG_INSP
-    player.scale = 0.58
+    player.scale = PLAYER_SCALE
 
     player.onCollide("water", () => {
         SPEEN_ACTIVE = 1
