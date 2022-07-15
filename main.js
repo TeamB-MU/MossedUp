@@ -5,7 +5,7 @@
 //const DBUG_INSP = false
 //const PLAYER_SCALE = 0.58
 var STARTING_SFX = 0
-var REACHED_LEVEL2 = false
+var LOADING_SEEN = false
 var SPEEN_ACTIVE = 0
 
 // Import kaboom
@@ -67,11 +67,13 @@ loadSpriteAtlas("assets/bee.png", {
     }
 })
 loadSprite("black", "assets/intro.png")
+loadSprite("credits", "assets/credits.png")
 loadSprite("block", "assets/hitboxes/block.png")
 loadSprite("water", "assets/hitboxes/water.png")
 loadSprite("wood", "assets/hitboxes/wood.png")
 loadSprite("background", "assets/screen1.png");
 loadSprite("background2", "assets/screen2.png");
+loadSprite("backgroundBlurred", "assets/screen1Blur.png");
 loadSound("jump", "sound/jump.wav")
 loadSound("dash", "sound/dash.wav")
 loadSound("ground", "sound/hitground.wav")
@@ -80,95 +82,56 @@ gravity(CONFIG.GRAVITY)
 
 // Defines Levels (AKA: Scenes)
 scene("title", ({ levelIdx }) => {
-    // create a black bg that covers the entire screen
+    if (LOADING_SEEN === false) {
+        loadScreen()
+    } else {
+        titleSeq()
+    }
+})
+
+scene("credits", () => {
     const bg = add([
-        sprite("black"),
+        sprite("backgroundBlurred"),
         pos(width() / 2, height()),
-        area(),
-        color(0, 0, 0),
-        origin("bot"),        
-    ])
-
-    const title = add([
-        text("Team B Presents", {
-            font: "sinko",
-            fill: "white",
-            align: "center",
-        }),
-        pos(width() / 2, height() / 2.7),
-        area(),
-        origin("bot"),      
-    ])
-    title.scale = 6
-
-    const b = add([
-        sprite("b"),
-        pos(width() / 2, height() / 1.7),
         area(),
         origin("bot"),
     ])
-    b.play('idle')
 
-    wait(2.5, () => {
-        destroy(bg)
-        destroy(b)
-        destroy(title)
-    }).then(() => {
-        const gameTitle = add([
-            text("Mossed Up", {
-                font: "sinko",
-                fill: "white",
-                align: "center",
-            }),
-            pos(width() / 2, height() / 2.7),
-            area(),
-            origin("bot"),
-        ])
-        gameTitle.scale = 13
+    const credits = add([
+        sprite("credits"),
+        pos(width() / 2, height() / 2),
+        area(),
+        origin("center"),
+    ])
 
-        const startBtn = add([
-            text('Start', { 
-                font: "sinko",
-                fill: "white",
-                align: "center",
-            }),
-            pos(720, 720),
-            area({ 
-                cursor: "pointer",
-                scale: "5.5"
-            }),
-            origin("center"),
-        ])
+    const backBtn = add([
+        text("Back", {
+            font: "sinko",
+        }),
+        pos(width() / 2, height() / 1.25),
+        area({ 
+            scale: 5.5,
+        }),
+        origin("center"),
+    ]) 
 
-        const splash = add([
-            text(CONFIG.SPLASH_TEXTS[randi(0, CONFIG.SPLASH_TEXTS.length)], {
-                font: "sinko",
-                align: "center",
-            }),
-            pos(width() * 0.78, height() / 2.9),
-            rotate(-20),
-            color(245, 255, 46),
-            origin("center"),
-        ])
-        splash.scale = 4
-        
-        startBtn.onClick(() => {
-            go("screen1", {
-                levelIdx: 0,
-                playerposx: 0,
-                playerposy: 0,
-            })
-        })
-    
-        startBtn.onUpdate(() => {
-            if (startBtn.isHovering()) {
-                const t = time() * 10
-                startBtn.color = rgb(9, 189, 21)
-                startBtn.scale = vec2(6)
-            } else {
-                startBtn.scale = vec2(5)
-                startBtn.color = rgb()
-            }
+    backBtn.scale = 6
+    credits.scale = 1.7
+
+    backBtn.onUpdate(() => {
+        if (backBtn.isHovering()) {
+            const t = time() * 10
+            backBtn.color = rgb(9, 189, 21)
+            backBtn.scale = vec2(6)
+        } else {
+            backBtn.scale = vec2(5)
+            backBtn.color = rgb()
+        }
+    })
+
+    backBtn.onClick(() => {
+        go("title", {
+            levelIdx: 0,
         })
     })
 })
@@ -474,4 +437,145 @@ function playercontlv2(x, y, levelIdx) {
             })
         }
     })
+}
+
+function titleSeq() {
+    const bg = add([
+        sprite("backgroundBlurred"),
+        pos(width() / 2, height()),
+        area(),
+        origin("bot"),
+    ])
+
+    const gameTitle = add([
+        text("Mossed Up", {
+            font: "sinko",
+            fill: "white",
+            align: "center",
+        }),
+        pos(width() / 2, height() / 2.7),
+        area(),
+        origin("bot"),
+    ])
+
+    const startBtn = add([
+        text('Start', { 
+            font: "sinko",
+            fill: "white",
+            align: "center",
+        }),
+        pos(720, 720),
+        area({ 
+            cursor: "pointer",
+            scale: "5.5"
+        }),
+        origin("center"),
+    ])
+        
+    const aboutBtn = add([
+        text('Credits', { 
+            font: "sinko",
+            fill: "white",
+            align: "center",
+        }),
+        pos(720, 800),
+        area({ 
+            cursor: "pointer",
+            scale: "5.5",
+        }),
+        origin("center"),
+    ])
+
+    const splash = add([
+        text(CONFIG.SPLASH_TEXTS[randi(0, CONFIG.SPLASH_TEXTS.length)], {
+            font: "sinko",
+            align: "center",
+        }),
+        pos(width() * 0.78, height() / 2.9),
+        rotate(-20),
+        color(245, 255, 46),
+        origin("center"),
+    ])
+
+    splash.scale = 4
+    gameTitle.scale = 13
+    startBtn.scale = 5.5
+    aboutBtn.scale = 5.5
+        
+    startBtn.onClick(() => {
+        go("screen1", {
+            levelIdx: 0,
+            playerposx: 0,
+            playerposy: 0,
+        })
+    })
+
+    aboutBtn.onClick(() => {
+        go("credits", {
+            levelIdx: 0,
+            playerposx: 0,
+            playerposy: 0,
+        })
+    })
+    
+    startBtn.onUpdate(() => {
+        if (startBtn.isHovering()) {
+            const t = time() * 10
+            startBtn.color = rgb(9, 189, 21)
+            startBtn.scale = vec2(6)
+        } else {
+            startBtn.scale = vec2(5)
+            startBtn.color = rgb()
+        }
+    })
+
+    aboutBtn.onUpdate(() => {
+        if (aboutBtn.isHovering()) {
+            const t = time() * 10
+            aboutBtn.color = rgb(9, 189, 21)
+            aboutBtn.scale = vec2(6)
+        } else {
+            aboutBtn.scale = vec2(5)
+            aboutBtn.color = rgb()
+        }
+    })
+}
+
+function loadScreen() {
+    const bg = add([
+        sprite("black"),
+        pos(width() / 2, height()),
+        area(),
+        color(0, 0, 0),
+        origin("bot"),        
+    ])
+
+    const title = add([
+        text("Team B Presents", {
+            font: "sinko",
+            fill: "white",
+            align: "center",
+        }),
+        pos(width() / 2, height() / 2.7),
+        area(),
+        origin("bot"),      
+    ])
+    title.scale = 6
+
+    const b = add([
+        sprite("b"),
+        pos(width() / 2, height() / 1.7),
+        area(),
+        origin("bot"),
+    ])
+    b.play('idle')
+
+    wait(2.5, () => {
+        destroy(bg)
+        destroy(b)
+        destroy(title)
+    }).then(() => {
+        LOADING_SEEN = true
+        titleSeq()
+    }) 
 }

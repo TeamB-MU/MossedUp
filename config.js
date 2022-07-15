@@ -6,7 +6,7 @@ const CONFIG = {
     DEBUG: false,
     SPLASH_TEXTS: [
         // Game reference
-        "Made in at least 1 second",
+        "Made in at least 1min",
         "Also try Minecraft",
         "Also try Terraria",
         "I love my medic bag",
@@ -27,6 +27,7 @@ const CONFIG = {
         "How about no?",
         "Antidisestablishmentarianism",
         "such cool, much wow",
+        "insert-moyai-emoji",
         // Hello to the developers countries
         "Privet!, Rossiya",
         "Hello!, USA",
