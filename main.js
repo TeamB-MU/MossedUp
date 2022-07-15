@@ -245,24 +245,24 @@ scene("screen2", ({ levelIdx, playerposx }) => {
     const level = addLevel([
         '=                                              =',
         '                                                ',
-        '=                        #######               =',
-        '                         = = = =                ',
-        '=                        = = = =               =',
+        '=                                              =',
         '                                                ',
-        '=                        = = = =               =',
-        '                                                ',
-        '=                                     #######  =',
+        '=                                              =',
+        '                        # # # #                 ',
+        '=                       = = = =                =',
+        '                        = = = =                 ',
+        '=                       = = = =       #######  =',
         '                                      =======   ',
         '=                                              =',
         '                                                ',
         '=                                              =',
-        '                       ###                      ',
-        '=                      ===                     =',
-        '                                      -- -      ',
-        '=                                     == =     =',    
-        '                                      = ==      ',
-        '=           -- - -                             =',
-        '            == = =                              ',
+        '                                                ',
+        '=                                              =',
+        '                                                ',
+        '=                                              =',    
+        '                                        ----    ',
+        '=           -- - -                      = ==   =',
+        '            == = ==                             ',
         '=            =                                 =',
         '                                                ',
         '=                                              =',
@@ -274,9 +274,9 @@ scene("screen2", ({ levelIdx, playerposx }) => {
         '=                                              =',
         '                                                ',
         '=                                              =',
-        '              - --                              ',
-        '=             = ==                             =',
-        '     ##       =                                 ',
+        '                                                ',
+        '=                                              =',
+        '     ##                                         ',
         '=    ==                   -----                =',
         '     ==                  == = =                 ',
         '=                        =    =                =',
@@ -343,15 +343,15 @@ function playercontlv1(x, y, levelIdx) {
 
     // Movement Bindings
     onKeyDown("left", () => {
-        if (!player.isGrounded()) {
+        //if (!player.isGrounded()) {
             player.move(-SPEED, 0)
-        }
+        //}
     })
 
     onKeyDown("right", () => {
-        if (!player.isGrounded()) {
+        //if (!player.isGrounded()) {
             player.move(SPEED, 0)
-        }
+        //}
     }) 
 
     onKeyDown("space", () => {
@@ -414,7 +414,7 @@ function playercontlv2(x, y, levelIdx) {
 
     onLoad(() => {
         player.pos.x = x
-        player.pos.y = 1350
+        player.pos.y = 1370
 
         player.jump(JUMP_FORCE)
         player.play("jump")
@@ -422,15 +422,15 @@ function playercontlv2(x, y, levelIdx) {
 
     // Movement Bindings
     onKeyDown("left", () => {
-        if (!player.isGrounded()) {
+        //if (player.isGrounded()) {
             player.move(-SPEED, 0)
-        }
+        //}
     })
 
     onKeyDown("right", () => {
-        if (!player.isGrounded()) {
-            player.move(SPEED, 0)
-        }
+        //if (player.isGrounded()) {
+        player.move(SPEED, 0)
+        //}
     }) 
 
     onKeyDown("space", () => {
