@@ -1,7 +1,7 @@
 // Variables/Constants/Immutables
 const SPEED = 280
-const GRAV = 456
-const JUMP_FORCE = 480
+const GRAV = 1200
+const JUMP_FORCE = 780
 const DBUG_INSP = false
 const PLAYER_SCALE = 0.58
 let STARTING_SFX = 0
@@ -48,7 +48,7 @@ loadSpriteAtlas("assets/player.png", {
         },
     }
 })
-loadSpriteAtlas("assets/b-sheet.png", {
+loadSpriteAtlas("assets/bee.png", {
     "b": {
         x: 0,
         y: 0,
@@ -261,7 +261,7 @@ scene("screen2", ({ levelIdx, playerposx }) => {
         '                                                ',
         '=                                              =',    
         '                                        ----    ',
-        '=           -- - -                      = ==   =',
+        '=           -- - --                     = ==   =',
         '            == = ==                             ',
         '=            =                                 =',
         '                                                ',
@@ -343,15 +343,11 @@ function playercontlv1(x, y, levelIdx) {
 
     // Movement Bindings
     onKeyDown("left", () => {
-        //if (!player.isGrounded()) {
-            player.move(-SPEED, 0)
-        //}
+        player.move(-SPEED, 0)
     })
 
     onKeyDown("right", () => {
-        //if (!player.isGrounded()) {
-            player.move(SPEED, 0)
-        //}
+        player.move(SPEED, 0)
     }) 
 
     onKeyDown("space", () => {
@@ -422,15 +418,11 @@ function playercontlv2(x, y, levelIdx) {
 
     // Movement Bindings
     onKeyDown("left", () => {
-        //if (player.isGrounded()) {
-            player.move(-SPEED, 0)
-        //}
+        player.move(-SPEED, 0)
     })
 
     onKeyDown("right", () => {
-        //if (player.isGrounded()) {
         player.move(SPEED, 0)
-        //}
     }) 
 
     onKeyDown("space", () => {
@@ -463,7 +455,7 @@ function playercontlv2(x, y, levelIdx) {
     player.onUpdate(() => {
         if (player.pos.y >= 1500) {
             go("screen1", {
-                levelIdx: levelIdx + 1,
+                levelIdx: levelIdx,
                 playerposx: player.pos.x,
                 playerposy: player.pos.y,
             })
