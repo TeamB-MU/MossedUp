@@ -139,6 +139,18 @@ scene("title", ({ levelIdx }) => {
             }),
             origin("center"),
         ])
+
+        const splash = add([
+            text(CONFIG.SPLASH_TEXTS[randi(0, CONFIG.SPLASH_TEXTS.length)], {
+                font: "sinko",
+                align: "center",
+            }),
+            pos(width() * 0.78, height() / 2.9),
+            rotate(-20),
+            color(245, 255, 46),
+            origin("center"),
+        ])
+        splash.scale = 4
         
         startBtn.onClick(() => {
             go("screen1", {
