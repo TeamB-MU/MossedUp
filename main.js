@@ -1,15 +1,16 @@
-// Variables/Constants/Immutables
-const SPEED = 280
-const GRAV = 1200
-const JUMP_FORCE = 780
-const DBUG_INSP = false
-const PLAYER_SCALE = 0.58
-let STARTING_SFX = 0
+// Variables
+//const SPEED = 280
+//const GRAV = 1200
+//const JUMP_FORCE = 780
+//const DBUG_INSP = false
+//const PLAYER_SCALE = 0.58
+var STARTING_SFX = 0
 var REACHED_LEVEL2 = false
 var SPEEN_ACTIVE = 0
 
 // Import kaboom
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs"
+import CONFIG from "./config.js"
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Initialize Context (Kaboom is based on canvas)
@@ -75,7 +76,7 @@ loadSound("jump", "sound/jump.wav")
 loadSound("dash", "sound/dash.wav")
 loadSound("ground", "sound/hitground.wav")
 
-gravity(GRAV)
+gravity(CONFIG.GRAVITY)
 
 // Defines Levels (AKA: Scenes)
 scene("title", ({ levelIdx }) => {
@@ -224,7 +225,7 @@ scene("screen1", ({ levelIdx, playerposx }) => {
         ]
     })
     
-    gravity(GRAV)
+    gravity(CONFIG.GRAV)
 
     const background = add([
         sprite("background", { width: width(), height: height() }),
@@ -318,7 +319,7 @@ scene("screen2", ({ levelIdx, playerposx }) => {
         ]
     })
 
-    gravity(GRAV)
+    gravity(CONFIG.GRAV)
     const water = get("water")[0]
     const wood = get("wood")[0]
     
@@ -338,21 +339,21 @@ function playercontlv1(x, y, levelIdx) {
         origin("bot"),
     ])
 
-    debug.inspect = DBUG_INSP
-    player.scale = PLAYER_SCALE
+    debug.inspect = CONFIG.DEBUG
+    player.scale = CONFIG.PLAYER_SCALE
 
     // Movement Bindings
     onKeyDown("left", () => {
-        player.move(-SPEED, 0)
+        player.move(-CONFIG.SPEED, 0)
     })
 
     onKeyDown("right", () => {
-        player.move(SPEED, 0)
+        player.move(CONFIG.SPEED, 0)
     }) 
 
     onKeyDown("space", () => {
         if (player.isGrounded()) {
-            player.jump(JUMP_FORCE)
+            player.jump(CONFIG.JUMP_FORCE)
             player.play("jump")
             play("jump")
         }
@@ -361,7 +362,7 @@ function playercontlv1(x, y, levelIdx) {
     onKeyPress("v", () => {
         if (SPEEN_ACTIVE === 0) {
         } else if (!player.isGrounded()) {
-            player.jump(JUMP_FORCE + 30)
+            player.jump(CONFIG.JUMP_FORCE + 30)
             play("dash")
             SPEEN_ACTIVE = 0
         } else {
@@ -397,8 +398,8 @@ function playercontlv2(x, y, levelIdx) {
 		origin("bot"),
     ])
 
-    debug.inspect = DBUG_INSP
-    player.scale = PLAYER_SCALE
+    debug.inspect = CONFIG.DEBUG
+    player.scale = CONFIG.PLAYER_SCALE
 
     player.onCollide("water", () => {
         SPEEN_ACTIVE = 1
@@ -412,22 +413,22 @@ function playercontlv2(x, y, levelIdx) {
         player.pos.x = x
         player.pos.y = 1370
 
-        player.jump(JUMP_FORCE)
+        player.jump(CONFIG.JUMP_FORCE)
         player.play("jump")
     })
 
     // Movement Bindings
     onKeyDown("left", () => {
-        player.move(-SPEED, 0)
+        player.move(-CONFIG.SPEED, 0)
     })
 
     onKeyDown("right", () => {
-        player.move(SPEED, 0)
+        player.move(CONFIG.SPEED, 0)
     }) 
 
     onKeyDown("space", () => {
         if (player.isGrounded()) {
-            player.jump(JUMP_FORCE)
+            player.jump(CONFIG.JUMP_FORCE)
             player.play("jump")
             play("jump")
         }
@@ -436,7 +437,7 @@ function playercontlv2(x, y, levelIdx) {
     onKeyPress("v", () => {
         if (SPEEN_ACTIVE === 0) {
         } else if (!player.isGrounded()) {
-            player.jump(JUMP_FORCE + 30)
+            player.jump(CONFIG.JUMP_FORCE + 30)
             play("dash")
             SPEEN_ACTIVE = 0
         } else {
