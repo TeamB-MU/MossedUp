@@ -1,9 +1,4 @@
 // Variables
-//const SPEED = 280
-//const GRAV = 1200
-//const JUMP_FORCE = 780
-//const DBUG_INSP = false
-//const PLAYER_SCALE = 0.58
 var STARTING_SFX = 0
 var LOADING_SEEN = false
 var SPEEN_ACTIVE = 0
@@ -54,7 +49,7 @@ loadSpriteAtlas("assets/bee.png", {
         x: 0,
         y: 0,
         width: 1280,
-        height: 320,
+        height: 230,
         sliceX: 4,
         anims: {
             idle: {
@@ -73,6 +68,8 @@ loadSprite("water", "assets/hitboxes/water.png")
 loadSprite("wood", "assets/hitboxes/wood.png")
 loadSprite("background", "assets/screen1.png");
 loadSprite("background2", "assets/screen2.png");
+loadSprite("background3", "assets/screen3EB.png");
+loadSprite("background31", "assets/screen3.1.png");
 loadSprite("backgroundBlurred", "assets/screen1Blur.png");
 loadSound("jump", "sound/jump.wav")
 loadSound("dash", "sound/dash.wav")
@@ -301,7 +298,89 @@ scene("screen2", ({ levelIdx, playerposx }) => {
     playercontlv2(playerposx, 1400, levelIdx)
 })
 
-go("title", {
+scene("screen3", ({ levelIdx, playerposx }) => {
+    const level = addLevel([
+        '                                                ',
+        '=                                              =',
+        '                                                ',
+        '=                                              =',
+        '                                                ',
+        '=                                              =',
+        '                                                ',
+        '=                                              =',
+        '                                                ',
+        '=                                              =',
+        '                                                ',
+        '=                        -- - - -              =',
+        '                         == = = =               ',
+        '=                        =      =              =',
+        '                         == = = =               ',
+        '=                                              =',
+        '                                                ',
+        '=                                              =',    
+        '                                                ',
+        '=      = = = = =                               =',
+        '       = = = = =                                ',
+        '=                                              =',
+        '                                                ',
+        '=                                              =',
+        '                                                ',
+        '=                                              =',
+        '                                                ', 
+        '=                                              =',
+        '                                                ',
+        '=                                              =',
+        '                                                ',
+        '=                                              =',
+        '                     =                          ',
+        '=                                              =',
+        '                                                ',
+        '=                                              =',
+        '                                                ',
+        '=                                              =',
+        '                                                ',
+        '=                                              =',
+        '                                                ',
+        '=                        --------              =',
+        '             ^           ========               ',
+        '=                        ========              =',
+    ], {
+        width: 32,
+        height: 32,
+        pos: vec2(-30, 31),
+        "^": () => [
+            sprite("background3", { width: width(), height: height() }),
+            pos(334, -645),
+            origin("center"),
+            scale(1),
+            fixed(),
+            "background",
+        ],
+        "=": () => [
+            sprite("block"),
+            area(),
+            solid(),
+            origin("center"),
+        ],
+        "-": () => [
+            sprite("water"),
+            area({ scale: 2 }),
+            origin("center"),
+            "water"
+        ],
+        "#": () => [
+            sprite("wood"),
+            area({ scale: 1 }),
+            origin("center"),
+            "wood"
+        ],
+    })
+    gravity(CONFIG.GRAV)
+
+    playercontlv3(playerposx, 1400, levelIdx)
+})
+
+go("screen3", {
     levelIdx: 0,
 })
 
@@ -390,6 +469,91 @@ function playercontlv2(x, y, levelIdx) {
 
         player.jump(CONFIG.JUMP_FORCE)
         player.play("jump")
+    })
+
+    // Movement Bindings
+    onKeyDown("left", () => {
+        player.move(-CONFIG.SPEED, 0)
+    })
+
+    onKeyDown("right", () => {
+        player.move(CONFIG.SPEED, 0)
+    }) 
+
+    onKeyDown("space", () => {
+        if (player.isGrounded()) {
+            player.jump(CONFIG.JUMP_FORCE)
+            player.play("jump")
+            play("jump")
+        }
+    })
+
+    onKeyPress("v", () => {
+        if (SPEEN_ACTIVE === 0) {
+        } else if (!player.isGrounded()) {
+            player.jump(CONFIG.JUMP_FORCE + 30)
+            play("dash")
+            SPEEN_ACTIVE = 0
+        } else {
+        }
+    })
+
+    player.onGround(() => {
+        if (SPEEN_ACTIVE <= 0) {
+            player.play("idle")
+        } else {
+            player.play("swim")
+        }
+        play("ground")
+    })
+
+    player.onUpdate(() => {
+        if (player.pos.y >= 1500) {
+            go("screen1", {
+                levelIdx: levelIdx,
+                playerposx: player.pos.x,
+                playerposy: player.pos.y,
+            })
+        }
+    })
+}
+
+function playercontlv3(x, y, levelIdx) {
+    const player = add([ 
+        sprite("player", { anim: "idle" }),
+        pos(x, y),
+        area(),
+		body(),
+		origin("bot"),
+    ])
+
+    const bee = add([
+        sprite("b"),
+        pos(630, 1050),
+        area(),
+        body(),
+        origin("bot"),
+    ])
+
+    debug.inspect = CONFIG.DEBUG
+    player.scale = CONFIG.PLAYER_SCALE
+    bee.scale = CONFIG.PLAYER_SCALE + 0.1
+
+    player.onCollide("water", () => {
+        SPEEN_ACTIVE = 1
+    })
+
+    player.onCollide("wood", () => {
+        SPEEN_ACTIVE = 0
+    })
+
+    onLoad(() => {
+        player.pos.x = 898//x
+        player.pos.y = 1370
+
+        player.jump(CONFIG.JUMP_FORCE)
+        player.play("jump")
+        bee.play("idle")
     })
 
     // Movement Bindings

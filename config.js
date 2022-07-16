@@ -3,7 +3,7 @@ const CONFIG = {
     GRAVITY: 1200,
     JUMP_FORCE: 900,
     PLAYER_SCALE: 0.58,
-    DEBUG: false,
+    DEBUG: true,
     SPLASH_TEXTS: [
         // Game reference
         "Made in at least 1min",
