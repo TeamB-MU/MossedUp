@@ -2,6 +2,7 @@
 var STARTING_SFX = 0
 var LOADING_SEEN = false
 var SPEEN_ACTIVE = 0
+var LV3 = 0
 
 // Import kaboom
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs"
@@ -69,7 +70,6 @@ loadSprite("wood", "assets/hitboxes/wood.png")
 loadSprite("background", "assets/screen1.png");
 loadSprite("background2", "assets/screen2.png");
 loadSprite("background3", "assets/screen3EB.png");
-loadSprite("background31", "assets/screen3.1.png");
 loadSprite("backgroundBlurred", "assets/screen1Blur.png");
 loadSound("jump", "sound/jump.wav")
 loadSound("dash", "sound/dash.wav")
@@ -376,11 +376,10 @@ scene("screen3", ({ levelIdx, playerposx }) => {
         ],
     })
     gravity(CONFIG.GRAV)
-
     playercontlv3(playerposx, 1400, levelIdx)
 })
 
-go("screen3", {
+go("screen1", {
     levelIdx: 0,
 })
 
@@ -464,11 +463,16 @@ function playercontlv2(x, y, levelIdx) {
     })
 
     onLoad(() => {
-        player.pos.x = x
-        player.pos.y = 1370
-
-        player.jump(CONFIG.JUMP_FORCE)
-        player.play("jump")
+        if (LV3 === 1) {
+            player.pos.x = x
+            player.pos.y = 90
+        } else {
+            player.pos.x = x
+            player.pos.y = 1370
+    
+            player.jump(CONFIG.JUMP_FORCE)
+            player.play("jump")
+        }
     })
 
     // Movement Bindings
@@ -514,6 +518,13 @@ function playercontlv2(x, y, levelIdx) {
                 playerposx: player.pos.x,
                 playerposy: player.pos.y,
             })
+        } else if (player.pos.y <= 80) {
+            LV3 = 1
+            go("screen3", {
+                levelIdx: levelIdx + 1,
+                playerposx: player.pos.x,
+                playerposy: player.pos.y,
+            })
         }
     })
 }
@@ -548,7 +559,7 @@ function playercontlv3(x, y, levelIdx) {
     })
 
     onLoad(() => {
-        player.pos.x = 898//x
+        player.pos.x = x
         player.pos.y = 1370
 
         player.jump(CONFIG.JUMP_FORCE)
@@ -594,7 +605,7 @@ function playercontlv3(x, y, levelIdx) {
 
     player.onUpdate(() => {
         if (player.pos.y >= 1500) {
-            go("screen1", {
+            go("screen2", {
                 levelIdx: levelIdx,
                 playerposx: player.pos.x,
                 playerposy: player.pos.y,
