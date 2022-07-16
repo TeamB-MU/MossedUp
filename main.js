@@ -71,6 +71,7 @@ loadSprite("background", "assets/screen1.png");
 loadSprite("background2", "assets/screen2.png");
 loadSprite("background3", "assets/screen3EB.png");
 loadSprite("backgroundBlurred", "assets/screen1Blur.png");
+loadSprite("gameTitle", "assets/mosseduplogo.png")
 loadSound("jump", "sound/jump.wav")
 loadSound("dash", "sound/dash.wav")
 loadSound("ground", "sound/hitground.wav")
@@ -379,7 +380,7 @@ scene("screen3", ({ levelIdx, playerposx }) => {
     playercontlv3(playerposx, 1400, levelIdx)
 })
 
-go("screen1", {
+go("title", {
     levelIdx: 0,
 })
 
@@ -420,6 +421,12 @@ function playercontlv1(x, y, levelIdx) {
             SPEEN_ACTIVE = 0
         } else {
         }
+    })
+
+    onKeyPress("escape", () => {
+        go("title", {
+            levelIdx: levelIdx - levelIdx,
+        })
     })
 
     player.onGround(() => {
@@ -500,6 +507,12 @@ function playercontlv2(x, y, levelIdx) {
             SPEEN_ACTIVE = 0
         } else {
         }
+    })
+
+    onKeyPress("escape", () => {
+        go("title", {
+            levelIdx: levelIdx - levelIdx,
+        })
     })
 
     player.onGround(() => {
@@ -594,6 +607,12 @@ function playercontlv3(x, y, levelIdx) {
         }
     })
 
+    onKeyPress("escape", () => {
+        go("title", {
+            levelIdx: levelIdx - levelIdx,
+        })
+    })
+
     player.onGround(() => {
         if (SPEEN_ACTIVE <= 0) {
             player.play("idle")
@@ -623,11 +642,7 @@ function titleSeq() {
     ])
 
     const gameTitle = add([
-        text("Mossed Up", {
-            font: "sinko",
-            fill: "white",
-            align: "center",
-        }),
+        sprite("gameTitle"),
         pos(width() / 2, height() / 2.7),
         area(),
         origin("bot"),
@@ -667,13 +682,13 @@ function titleSeq() {
             align: "center",
         }),
         pos(width() * 0.78, height() / 2.9),
-        rotate(-20),
+        rotate(-15),
         color(245, 255, 46),
         origin("center"),
     ])
 
     splash.scale = 4
-    gameTitle.scale = 13
+    gameTitle.scale = 0.9
     startBtn.scale = 5.5
     aboutBtn.scale = 5.5
         

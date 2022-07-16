@@ -3,10 +3,10 @@ const CONFIG = {
     GRAVITY: 1200,
     JUMP_FORCE: 900,
     PLAYER_SCALE: 0.58,
-    DEBUG: true,
+    DEBUG: false,
     SPLASH_TEXTS: [
         // Game reference
-        "Made in at least 1min",
+        "Made in 2 weeks",
         "Also try Minecraft",
         "Also try Terraria",
         "I love my medic bag",
@@ -15,12 +15,16 @@ const CONFIG = {
         "sqrt(-1) love you",
         "Made with Kaboom.js",
         "GNU\/Linux",
-        "Or as i've recently called it, GNU plus Linux",
+        "Available on itch",
         // I have no idea
+        "donute",
+        "#icharusisoverparty",
         "moss tastey",
+        "made with moss",
         "polygonal?",
+        "octagonal!",
         "pongon no gonpon",
-        "ROFL",
+        "ROFL LMAO XD LOL",
         "@joshuaclayton",
         "w   H  A      t",
         "atumalaca kkkkkkkkk",
@@ -28,15 +32,14 @@ const CONFIG = {
         "Antidisestablishmentarianism",
         "such cool, much wow",
         "insert-moyai-emoji",
+        "99.9% free of amogus",
         // Hello to the developers countries
         "Privet!, Rossiya",
         "Hello!, USA",
         "Ola!, Brasil",
-        // Slim shady reference because yes
+        // Music references
         "Guess who's back?",
-        "Back again?",
         "Shady\'s Back.",
-        "Once again.",
         // GD References
         "Woah, it\'s Wulzy",
         "I LOVE TUESDAYS",
