@@ -3,6 +3,7 @@ var STARTING_SFX = 0
 var LOADING_SEEN = false
 var SPEEN_ACTIVE = 0
 var LV3 = 0
+var LV2 = 0
 
 // Import kaboom
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs"
@@ -215,7 +216,7 @@ scene("screen1", ({ levelIdx, playerposx }) => {
     }
 })
 
-scene("screen2", ({ levelIdx, playerposx }) => {
+scene("screen2", ({ levelIdx, playerposx, playerposy, lv }) => {
     const level = addLevel([
         '=                                              =',
         '                                                ',
@@ -296,10 +297,10 @@ scene("screen2", ({ levelIdx, playerposx }) => {
     const water = get("water")[0]
     const wood = get("wood")[0]
     
-    playercontlv2(playerposx, 1400, levelIdx)
+    playercontlv2(playerposx, playerposy, levelIdx, lv)
 })
 
-scene("screen3", ({ levelIdx, playerposx }) => {
+scene("screen3", ({ levelIdx, playerposx, playerposy, lv }) => {
     const level = addLevel([
         '                                                ',
         '=                                              =',
@@ -377,7 +378,7 @@ scene("screen3", ({ levelIdx, playerposx }) => {
         ],
     })
     gravity(CONFIG.GRAV)
-    playercontlv3(playerposx, 1400, levelIdx)
+    playercontlv3(playerposx, playerposy, levelIdx, lv)
 })
 
 go("title", {
@@ -443,13 +444,13 @@ function playercontlv1(x, y, levelIdx) {
             go("screen2", {
                 levelIdx: levelIdx + 1,
                 playerposx: player.pos.x,
-                playerposy: player.pos.y,
+                playerposy: 1350,
             })
         }
     })
 }
 
-function playercontlv2(x, y, levelIdx) {
+function playercontlv2(x, y, levelIdx, lv) {
     const player = add([ 
         sprite("player", { anim: "idle" }),
         pos(x, y),
@@ -470,13 +471,11 @@ function playercontlv2(x, y, levelIdx) {
     })
 
     onLoad(() => {
-        if (LV3 === 1) {
-            player.pos.x = x
-            player.pos.y = 90
+        player.pos.x = x
+        player.pos.y = y
+
+        if (lv === 3) {
         } else {
-            player.pos.x = x
-            player.pos.y = 1370
-    
             player.jump(CONFIG.JUMP_FORCE)
             player.play("jump")
         }
@@ -532,17 +531,17 @@ function playercontlv2(x, y, levelIdx) {
                 playerposy: player.pos.y,
             })
         } else if (player.pos.y <= 80) {
-            LV3 = 1
             go("screen3", {
                 levelIdx: levelIdx + 1,
                 playerposx: player.pos.x,
                 playerposy: player.pos.y,
+                lv: 3
             })
         }
     })
 }
 
-function playercontlv3(x, y, levelIdx) {
+function playercontlv3(x, y, levelIdx, lv) {
     const player = add([ 
         sprite("player", { anim: "idle" }),
         pos(x, y),
@@ -554,9 +553,7 @@ function playercontlv3(x, y, levelIdx) {
     const bee = add([
         sprite("b"),
         pos(630, 1050),
-        area({
-            scale: vec2(1, 0.9)
-        }),
+        area(),
         body(),
         origin("bot"),
     ])
@@ -629,11 +626,14 @@ function playercontlv3(x, y, levelIdx) {
             go("screen2", {
                 levelIdx: levelIdx,
                 playerposx: player.pos.x,
-                playerposy: player.pos.y,
+                playerposy: 110,
+                lv: 3
             })
         }
     })
 }
+
+// ============================================================
 
 function titleSeq() {
     const bg = add([
