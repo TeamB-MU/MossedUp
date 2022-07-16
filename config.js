@@ -10,19 +10,21 @@ const CONFIG = {
         "Also try Minecraft",
         "Also try Terraria",
         "I love my medic bag",
+        "pongon is sus",
+        "99.9% free of amogus",
+        "octagonal!",
         // Programming
         "Hello World!",
         "sqrt(-1) love you",
         "Made with Kaboom.js",
         "GNU\/Linux",
-        "Available on itch",
+        "Available on itch.io",
         // I have no idea
         "donute",
         "#icharusisoverparty",
         "moss tastey",
         "made with moss",
         "polygonal?",
-        "octagonal!",
         "pongon no gonpon",
         "ROFL LMAO XD LOL",
         "@joshuaclayton",
@@ -32,7 +34,6 @@ const CONFIG = {
         "Antidisestablishmentarianism",
         "such cool, much wow",
         "insert-moyai-emoji",
-        "99.9% free of amogus",
         // Hello to the developers countries
         "Privet!, Rossiya",
         "Hello!, USA",
@@ -46,6 +47,7 @@ const CONFIG = {
         "Soon...",
         "Damnit",
         "Nevermind",
+        "Balls",
     ]
 };
 

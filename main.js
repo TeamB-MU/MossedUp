@@ -554,7 +554,9 @@ function playercontlv3(x, y, levelIdx) {
     const bee = add([
         sprite("b"),
         pos(630, 1050),
-        area(),
+        area({
+            scale: vec2(1, 0.9)
+        }),
         body(),
         origin("bot"),
     ])
@@ -682,7 +684,7 @@ function titleSeq() {
             align: "center",
         }),
         pos(width() * 0.78, height() / 2.9),
-        rotate(-15),
+        rotate(-10),
         color(245, 255, 46),
         origin("center"),
     ])
