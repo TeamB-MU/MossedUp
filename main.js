@@ -70,7 +70,7 @@ loadSprite("water", "assets/hitboxes/water.png")
 loadSprite("wood", "assets/hitboxes/wood.png")
 loadSprite("background", "assets/screen1.png");
 loadSprite("background2", "assets/screen2.png");
-loadSprite("background3", "assets/screen3EB.png");
+loadSprite("background3", "assets/screen3.png");
 loadSprite("backgroundBlurred", "assets/screen1Blur.png");
 loadSprite("gameTitle", "assets/mosseduplogo.png")
 loadSound("jump", "sound/jump.wav")
@@ -313,28 +313,24 @@ scene("screen3", ({ levelIdx, playerposx, playerposy, lv }) => {
         '                                                ',
         '=                                              =',
         '                                                ',
-        '=                        -- - - -              =',
-        '                         == = = =               ',
-        '=                        =      =              =',
-        '                         == = = =               ',
         '=                                              =',
         '                                                ',
-        '=                                              =',    
+        '=                                              =',
         '                                                ',
-        '=      = = = = =                               =',
-        '       = = = = =                                ',
+        '=                                              =',
+        '                              - -               ',
+        '=                         -- -= =              =',    
+        '                          = = = =               ',
+        '=                                              =',
+        '                                               ',
         '=                                              =',
         '                                                ',
         '=                                              =',
         '                                                ',
         '=                                              =',
         '                                                ', 
-        '=                                              =',
+        '=               =====                          =',
         '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                     =                          ',
         '=                                              =',
         '                                                ',
         '=                                              =',
@@ -343,16 +339,20 @@ scene("screen3", ({ levelIdx, playerposx, playerposy, lv }) => {
         '                                                ',
         '=                                              =',
         '                                                ',
-        '=                        --------              =',
-        '             ^           ========               ',
-        '=                        ========              =',
+        '=                                              =',
+        '                                                ',
+        '=                       ---                    =',
+        '                        ===                     ',
+        '=                                              =',
+        '             ^                                  ',
+        '=                                              =',
     ], {
         width: 32,
         height: 32,
         pos: vec2(-30, 31),
         "^": () => [
             sprite("background3", { width: width(), height: height() }),
-            pos(334, -645),
+            pos(334, -655),
             origin("center"),
             scale(1),
             fixed(),
@@ -377,7 +377,9 @@ scene("screen3", ({ levelIdx, playerposx, playerposy, lv }) => {
             "wood"
         ],
     })
-    gravity(CONFIG.GRAV)
+
+    debug.inspect = CONFIG.DEBUG
+    gravity(CONFIG.GRAVITY)
     playercontlv3(playerposx, playerposy, levelIdx, lv)
 })
 
@@ -552,9 +554,9 @@ function playercontlv3(x, y, levelIdx, lv) {
 
     const bee = add([
         sprite("b"),
-        pos(630, 1050),
+        pos(514, 383),
         area(),
-        body(),
+        solid(),
         origin("bot"),
     ])
 
@@ -590,7 +592,7 @@ function playercontlv3(x, y, levelIdx, lv) {
 
     onKeyDown("space", () => {
         if (player.isGrounded()) {
-            player.jump(CONFIG.JUMP_FORCE)
+            player.jump(CONFIG.JUMP_FORCE - 50)
             player.play("jump")
             play("jump")
         }
@@ -599,9 +601,16 @@ function playercontlv3(x, y, levelIdx, lv) {
     onKeyPress("v", () => {
         if (SPEEN_ACTIVE === 0) {
         } else if (!player.isGrounded()) {
-            player.jump(CONFIG.JUMP_FORCE + 30)
-            play("dash")
-            SPEEN_ACTIVE = 0
+            if (player.isTouching(bee)) {
+                bee.destroy()
+                wait(0.5)
+                player.jump(CONFIG.JUMP_FORCE - 50)
+                play("dash")
+            } else {
+                player.jump(CONFIG.JUMP_FORCE - 50)
+                play("dash")
+                SPEEN_ACTIVE = 0
+            }
         } else {
         }
     })
