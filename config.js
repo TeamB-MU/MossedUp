@@ -18,8 +18,10 @@ const CONFIG = {
         "sqrt(-1) love you",
         "Made with Kaboom.js",
         "GNU\/Linux",
+        "Open Source!",
         "Available on itch.io",
         // I have no idea
+        "We have come",
         "donute",
         "#icharusisoverparty",
         "moss tastey",
