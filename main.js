@@ -339,7 +339,7 @@ scene("screen3", ({ levelIdx, playerposx, playerposy, lv }) => {
         '=                                              =',
         '                                                ',
         '=                                              =',
-        '                                                ',
+        '               #####                            ',
         '=                                              =',
         '                                                ',
         '=                                              =',
@@ -688,12 +688,12 @@ function playercontlv3(x, y, levelIdx, lv) {
     onLoad(() => {
         player.pos.x = x
         player.pos.y = y
+        bee.play("idle")
 
         if (lv === 4) {
         } else {
             player.jump(CONFIG.JUMP_FORCE)
             player.play("jump")
-            bee.play("idle")
         }
     })
 
@@ -761,6 +761,8 @@ function playercontlv3(x, y, levelIdx, lv) {
 }
 
 function playercontlv4(x, y, levelIdx, lv) {
+    const spawnPoint = vec2(961, 1183)
+
     const player = add([ 
         sprite("player", { anim: "idle" }),
         pos(x, y),
