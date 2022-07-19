@@ -3,13 +3,12 @@ var STARTING_SFX = 0
 var LOADING_SEEN = false
 var SPEEN_ACTIVE = 0
 var MUSIC_PLAYING = false
-var LV3 = 0
-var LV2 = 0
 
 var DONUT_COUNT = 0
 var DONUT_LV1 = 0
 var DONUT_LV2 = 0
 var DONUT_LV3 = 0
+var DONUT_LV4 = 0
 
 // Import kaboom
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs"
@@ -86,15 +85,34 @@ loadSpriteAtlas("assets/donut-s.png", {
         }
     }
 })
+loadSpriteAtlas("assets/donut-b.png", {
+    "beegDonut": {
+        x: 0,
+        y: 0,
+        width: 2400,
+        height: 225,
+        sliceX: 10,
+        anims: {
+            idle: {
+                from: 0,
+                to: 9,
+                loop: true,
+                speed: 15,
+            }
+        }
+    }
+})
+
 loadSprite("black", "assets/intro.png")
 loadSprite("credits", "assets/credits.png")
+loadSprite("end", "assets/end.png")
 loadSprite("block", "assets/hitboxes/block.png")
 loadSprite("water", "assets/hitboxes/water.png")
 loadSprite("wood", "assets/hitboxes/wood.png")
 loadSprite("background", "assets/screen1.png");
 loadSprite("background2", "assets/screen2.png");
 loadSprite("background3", "assets/screen3.png");
-loadSprite("background4", "assets/screen4EB.png");
+loadSprite("background4", "assets/screen4.png");
 loadSprite("backgroundBlurred", "assets/screen1Blur.png");
 loadSprite("gameTitle", "assets/mosseduplogo.png")
 
@@ -106,11 +124,81 @@ loadSound("beehit", "sound/beeHit.wav")
 loadSound("playerhit", "sound/playerHit.wav")
 loadSound("ground", "sound/hitground.wav")
 loadSound("bee", "sound/bee.wav")
+loadSound("end", "sound/end.wav")
+loadSound("forestwaltz", "sound/forestwaltz.wav")
 loadSound("peaceandwarmth", "sound/peaceandwarmth.wav")
 
 gravity(CONFIG.GRAVITY)
+var RAND_5050 = rand(0, 1)
 
 // Defines Levels (AKA: Scenes)
+scene("end", ( levelIdx ) => {
+    LOADING_SEEN = false
+    STARTING_SFX = 0
+    SPEEN_ACTIVE = 0
+    DONUT_COUNT = 0
+    DONUT_LV1 = 0
+    DONUT_LV2 = 0
+    DONUT_LV3 = 0
+    DONUT_LV4 = 0
+
+    const bg = add([
+        sprite("backgroundBlurred"),
+        pos(width() / 2, height() / 2),
+        origin("center"),
+    ])
+
+    const end = add([
+        sprite("end"),
+        pos(width() / 2, height() / 2),
+        origin("center"),
+    ])
+
+    const donutCollected = add([
+        text(`You collected: ${DONUT_COUNT}`, {
+            font: "sinko",
+        }),
+        pos(width() / 2.2, height() / 2.5),
+        origin("center"),
+    ])
+
+    const donut = add([
+        sprite("donut"),
+        pos(width() / 1.32, height() / 2.46),
+        origin("center"),
+    ])
+
+    const endBtn = add([
+        text("End Game", {
+            font: "sinko",
+        }),
+        pos(width() / 2, height() / 1.5),
+        area({ scale: 5.5 }),
+        origin("center"),
+    ])
+
+    end.scale = 1.5
+    endBtn.scale = 5.5
+    donutCollected.scale = 5.5
+
+    endBtn.onUpdate(() => {
+        if (endBtn.isHovering()) {
+            const t = time() * 10
+            endBtn.color = rgb(9, 189, 21)
+            endBtn.scale = vec2(6)
+        } else {
+            endBtn.scale = vec2(5)
+            endBtn.color = rgb()
+        }
+    })
+
+    endBtn.onClick(() => {
+        go("title", {
+            levelIdx: levelIdx - levelIdx
+        })
+    })
+})
+
 scene("title", ({ levelIdx }) => {
     if (LOADING_SEEN === false) {
         loadScreen()
@@ -240,6 +328,18 @@ scene("screen1", ({ levelIdx, playerposx }) => {
         fixed(),
     ])
 
+    MUSIC_PLAYING = false
+
+    var RAND_5050 = rand(0, 1)
+    if (RAND_5050 > 0.5){
+        play("forestwaltz", { volume: 0.3 })
+        MUSIC_PLAYING = true
+
+        wait(24, () => {
+            MUSIC_PLAYING = false
+        })
+    }
+
     if (levelIdx == 0) {
         playercontlv1(578, 959, levelIdx)
     } else if (levelIdx > 0) {
@@ -267,8 +367,8 @@ scene("screen2", ({ levelIdx, playerposx, playerposy, lv }) => {
         '                                                ',
         '=                                              =',    
         '                                        ----    ',
-        '=           -- - --                     = ==   =',
-        '            == = ==                             ',
+        '=           -- - -                      = ==   =',
+        '            == = =                              ',
         '=            =                                 =',
         '                                                ',
         '=                                              =',
@@ -284,8 +384,8 @@ scene("screen2", ({ levelIdx, playerposx, playerposy, lv }) => {
         '=                                              =',
         '     ##                                         ',
         '=    ==                   -----                =',
-        '     ==                  == = =                 ',
-        '=                        =    =                =',
+        '     ==                 -== = =                 ',
+        '=                       -=    =                =',
         '                                                ',
         '=                        =    =                =',
         '                         =                      ',
@@ -327,6 +427,17 @@ scene("screen2", ({ levelIdx, playerposx, playerposy, lv }) => {
     gravity(CONFIG.GRAV)
     const water = get("water")[0]
     const wood = get("wood")[0]
+
+    var RAND_50501 = rand(0, 1)
+    if (MUSIC_PLAYING == true) {
+    } else if (RAND_50501 > 0.5){
+        play("forestwaltz", { volume: 0.3 })
+        MUSIC_PLAYING = true
+
+        wait(24, () => {
+            MUSIC_PLAYING = false
+        })
+    }
     
     playercontlv2(playerposx, playerposy, levelIdx, lv)
 })
@@ -409,6 +520,17 @@ scene("screen3", ({ levelIdx, playerposx, playerposy, lv }) => {
         ],
     })
 
+    var RAND_50502 = rand(0, 1)
+    if (MUSIC_PLAYING == true) {
+    } else if (RAND_50502 > 0.5){
+        play("forestwaltz", { volume: 0.3 })
+        MUSIC_PLAYING = true
+
+        wait(24, () => {
+            MUSIC_PLAYING = false
+        })
+    }
+
     debug.inspect = CONFIG.DEBUG
     gravity(CONFIG.GRAVITY)
     playercontlv3(playerposx, playerposy, levelIdx, lv)
@@ -423,40 +545,40 @@ scene("screen4", ({ levelIdx, playerposx, playerposy, lv }) => {
         '                                                ',
         '=                                              =',
         '                                                ',
-        '=                           ## # #             =',
-        '                            == = =              ',
         '=                                              =',
         '                                                ',
+        '=                     # # # #                  =',
+        '                      = = = =                   ',
+        '=                                              =',
+        '                       == = =                   ',
         '=                                              =',
         '                                                ',
-        '=         -- - -                               =',
-        '          == = =                                ',
         '=                                              =',
         '                                                ',
         '=                                              =',    
         '                                                ',
+        '=          -- - -                              =',
+        '           == = =                               ',
         '=                                              =',
         '                                                ',
         '=                                              =',
-        '                              ## #              ',
-        '=                             == =             =',
-        '                                                ',
-        '=                                              =',
+        '                                # #             ',
+        '=                               = =            =',
         '                                                ', 
-        '=                                              =',
+        '=                               = =            =',
         '                                                ',
         '=                                              =',
         '                                                ',
         '=                                              =',
-        '      # ##                                      ',
-        '=     = ==                                     =',
         '                                                ',
         '=                                              =',
-        '                         -- - - -               ',
-        '=                        == = = =              =',
+        '    ## # #                                      ',
+        '=   == = =                                     =',
         '                                                ',
         '=                                              =',
-        '                                                ',
+        '                              - -               ',
+        '=                             = =              =',
+        '                              = =               ',
         '=                                              =',
         '             ^                                  ',
         '=                                              =',
@@ -491,6 +613,17 @@ scene("screen4", ({ levelIdx, playerposx, playerposy, lv }) => {
             "wood"
         ],
     })
+
+    var RAND_50503 = rand(0, 1)
+    if (MUSIC_PLAYING == true) {
+    } else if (RAND_50503 > 0.5){
+        play("forestwaltz", { volume: 0.3 })
+        MUSIC_PLAYING = true
+
+        wait(24, () => {
+            MUSIC_PLAYING = false
+        })
+    }
 
     debug.inspect = CONFIG.DEBUG
     gravity(CONFIG.GRAVITY)
@@ -554,7 +687,7 @@ function playercontlv1(x, y, levelIdx) {
 
     player.onUpdate(() => {
         if (player.isTouching(donut)) {
-            DONUT_COUNT + 1
+            DONUT_COUNT = DONUT_COUNT + 1
             DONUT_LV1 = 1
             donut.destroy()
             play("collect")
@@ -632,7 +765,7 @@ function playercontlv2(x, y, levelIdx, lv) {
 
     player.onUpdate(() => {
         if (player.isTouching(donut)) {
-            DONUT_COUNT + 1
+            DONUT_COUNT = DONUT_COUNT + 1
             DONUT_LV2 = 1
             donut.destroy()
             play("collect")
@@ -703,7 +836,7 @@ function playercontlv3(x, y, levelIdx, lv) {
         if (SPEEN_ACTIVE === 0) {
         } else if (!player.isGrounded()) {
             if (player.isTouching(donut)) {
-                DONUT_COUNT + 1
+                DONUT_COUNT = DONUT_COUNT + 1
                 DONUT_LV3 = 1
                 donut.destroy()
                 play("collect")
@@ -738,8 +871,8 @@ function playercontlv3(x, y, levelIdx, lv) {
 
     player.onUpdate(() => {
         if (player.isTouching(donut)) {
-            DONUT_COUNT + 1
-            DONUT_LV2 = 1
+            DONUT_COUNT = DONUT_COUNT + 1
+            DONUT_LV3 = 1
             donut.destroy()
             play("collect")
         } else if (player.pos.y >= 1500) {
@@ -773,14 +906,32 @@ function playercontlv4(x, y, levelIdx, lv) {
 
     const bee = add([
         sprite("b"),
-        pos(610, 800),
+        pos(600, 970),
         area(),
         solid(),
         origin("bot"),
     ])
 
+    const donut = add([
+        sprite("donut", { anim: "idle" }),
+        pos(161, 1080),
+        area(),
+        origin("center"),
+    ])
+
+    const donutBeeg = add([
+        sprite("beegDonut", { anim: "idle" }),
+        pos(674, 160),
+        area(),
+    ])
+
+    if (DONUT_LV4 === 1) {
+        donut.destroy()
+    }
+
     bee.play("idle")
 
+    donutBeeg.scale = CONFIG.PLAYER_SCALE + 0.1
     debug.inspect = CONFIG.DEBUG
     player.scale = CONFIG.PLAYER_SCALE
     bee.scale = CONFIG.PLAYER_SCALE + 0.1
@@ -832,7 +983,17 @@ function playercontlv4(x, y, levelIdx, lv) {
     })
 
     player.onUpdate(() => {
-        if (player.pos.y >= 1500) {
+        if (player.isTouching(donutBeeg)) {
+            play("end")
+            go("end", {
+                levelIdx: levelIdx - levelIdx,
+            })
+        } else if (player.isTouching(donut)) {
+            DONUT_COUNT = DONUT_COUNT + 1
+            DONUT_LV4 = 1
+            donut.destroy()
+            play("collect")
+        } else if (player.pos.y >= 1500) {
             go("screen3", {
                 levelIdx: levelIdx,
                 playerposx: player.pos.x,
