@@ -125,6 +125,8 @@ loadSound("bee", "sound/bee.wav")
 loadSound("end", "sound/end.wav")
 loadSound("forestwaltz", "sound/forestwaltz.wav")
 loadSound("peaceandwarmth", "sound/peaceandwarmth.wav")
+loadSound("rocklirl", "sound/rockLirl.mp3")
+
 
 gravity(CONFIG.GRAVITY)
 
@@ -1069,14 +1071,29 @@ function titleSeq() {
     }) 
     paw.pause()
 
+    const rocklirl = play("rocklirl", {
+        loop: true,
+        volume: 0.3,
+    })
+    rocklirl.pause()
+
     if (MUSIC_PLAYING === true){
     } else {
         paw.play()
         MUSIC_PLAYING = true
     }
         
+    onKeyDown("control", () => {
+        onKeyDown("i", () => {
+            paw.pause()
+            rocklirl.play()
+            MUSIC_PLAYING = true
+        })
+    })
+
     startBtn.onClick(() => {
         paw.stop()
+        rocklirl.stop()
         go("screen1", {
             levelIdx: 0,
             playerposx: 0,
