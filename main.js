@@ -13,14 +13,12 @@ var DONUT_LV4 = 0
 // Import kaboom
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs"
 import CONFIG from "./config.js"
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Initialize Context (Kaboom is based on canvas)
 kaboom({
     width: 1440,
     height: 1440,
     scale: 0.5,
-    clearColor: [0, 0, 0],
 })
 
 // Loads assets and sounds
@@ -129,7 +127,6 @@ loadSound("forestwaltz", "sound/forestwaltz.wav")
 loadSound("peaceandwarmth", "sound/peaceandwarmth.wav")
 
 gravity(CONFIG.GRAVITY)
-var RAND_5050 = rand(0, 1)
 
 // Defines Levels (AKA: Scenes)
 scene("end", ( levelIdx ) => {
@@ -141,6 +138,7 @@ scene("end", ( levelIdx ) => {
     DONUT_LV2 = 0
     DONUT_LV3 = 0
     DONUT_LV4 = 0
+    MUSIC_PLAYING = false
 
     const bg = add([
         sprite("backgroundBlurred"),
