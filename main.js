@@ -123,10 +123,14 @@ loadSound("playerhit", "sound/playerHit.wav")
 loadSound("ground", "sound/hitground.wav")
 loadSound("bee", "sound/bee.wav")
 loadSound("end", "sound/end.wav")
-loadSound("forestwaltz", "sound/forestwaltz.wav")
+loadSound("forestwaltz", "sound/forestwaltz.mp3")
 loadSound("peaceandwarmth", "sound/peaceandwarmth.wav")
 loadSound("rocklirl", "sound/rockLirl.mp3")
 
+const fw = play("forestwaltz", { 
+    volume: 0.3,
+    loop: true
+})
 
 gravity(CONFIG.GRAVITY)
 
@@ -154,17 +158,12 @@ scene("end", ( levelIdx ) => {
         origin("center"),
     ])
 
+
     const donutCollected = add([
-        text(`You collected: ${DONUT_COUNT}`, {
+        text(`Thanks for playing`, {
             font: "sinko",
         }),
-        pos(width() / 2.2, height() / 2.5),
-        origin("center"),
-    ])
-
-    const donut = add([
-        sprite("donut"),
-        pos(width() / 1.32, height() / 2.46),
+        pos(width() / 2, height() / 2.5),
         origin("center"),
     ])
 
@@ -330,15 +329,8 @@ scene("screen1", ({ levelIdx, playerposx }) => {
 
     MUSIC_PLAYING = false
 
-    var RAND_5050 = rand(0, 1)
-    if (RAND_5050 > 0.5){
-        play("forestwaltz", { volume: 0.3 })
-        MUSIC_PLAYING = true
-
-        wait(24, () => {
-            MUSIC_PLAYING = false
-        })
-    }
+    fw.play()
+    MUSIC_PLAYING = true
 
     if (levelIdx == 0) {
         playercontlv1(578, 959, levelIdx)
@@ -427,17 +419,6 @@ scene("screen2", ({ levelIdx, playerposx, playerposy, lv }) => {
     gravity(CONFIG.GRAV)
     const water = get("water")[0]
     const wood = get("wood")[0]
-
-    var RAND_50501 = rand(0, 1)
-    if (MUSIC_PLAYING == true) {
-    } else if (RAND_50501 > 0.5){
-        play("forestwaltz", { volume: 0.3 })
-        MUSIC_PLAYING = true
-
-        wait(24, () => {
-            MUSIC_PLAYING = false
-        })
-    }
     
     playercontlv2(playerposx, playerposy, levelIdx, lv)
 })
@@ -519,17 +500,6 @@ scene("screen3", ({ levelIdx, playerposx, playerposy, lv }) => {
             "wood"
         ],
     })
-
-    var RAND_50502 = rand(0, 1)
-    if (MUSIC_PLAYING == true) {
-    } else if (RAND_50502 > 0.5){
-        play("forestwaltz", { volume: 0.3 })
-        MUSIC_PLAYING = true
-
-        wait(24, () => {
-            MUSIC_PLAYING = false
-        })
-    }
 
     debug.inspect = CONFIG.DEBUG
     gravity(CONFIG.GRAVITY)
@@ -614,17 +584,6 @@ scene("screen4", ({ levelIdx, playerposx, playerposy, lv }) => {
         ],
     })
 
-    var RAND_50503 = rand(0, 1)
-    if (MUSIC_PLAYING == true) {
-    } else if (RAND_50503 > 0.5){
-        play("forestwaltz", { volume: 0.3 })
-        MUSIC_PLAYING = true
-
-        wait(24, () => {
-            MUSIC_PLAYING = false
-        })
-    }
-
     debug.inspect = CONFIG.DEBUG
     gravity(CONFIG.GRAVITY)
     playercontlv4(playerposx, playerposy, levelIdx, lv)
@@ -638,7 +597,9 @@ function playercontlv1(x, y, levelIdx) {
     const player = add([ 
         sprite("player", { anim: "idle" }),
         pos(x, y),
-        area(),
+        area({
+            scale: vec2(0.87, 0.9)
+        }),
         body(),
         origin("bot"),
     ])
@@ -664,7 +625,7 @@ function playercontlv1(x, y, levelIdx) {
         if (SPEEN_ACTIVE === 0) {
         } else if (!player.isGrounded()) {
             player.jump(CONFIG.JUMP_FORCE - 50)
-            play("dash")
+            play("dash", { volume: 0.5 })
             SPEEN_ACTIVE = 0
         } else {
         }
@@ -681,7 +642,7 @@ function playercontlv1(x, y, levelIdx) {
         if (STARTING_SFX === 0) {
             STARTING_SFX = 1
         } else {
-            play("ground")
+            play("ground", { volume: 0.5 })
         }
     })
 
@@ -690,7 +651,7 @@ function playercontlv1(x, y, levelIdx) {
             DONUT_COUNT = DONUT_COUNT + 1
             DONUT_LV1 = 1
             donut.destroy()
-            play("collect")
+            play("collect", { volume: 0.5 })
         } else if (player.pos.y <= 100) {
             go("screen2", {
                 levelIdx: levelIdx + 1,
@@ -705,7 +666,9 @@ function playercontlv2(x, y, levelIdx, lv) {
     const player = add([ 
         sprite("player", { anim: "idle" }),
         pos(x, y),
-        area(),
+        area({
+            scale: vec2(0.87, 0.9)
+        }),
 		body(),
 		origin("bot"),
     ])
@@ -742,7 +705,7 @@ function playercontlv2(x, y, levelIdx, lv) {
         if (SPEEN_ACTIVE === 0) {
         } else if (!player.isGrounded()) {
             player.jump(CONFIG.JUMP_FORCE - 50)
-            play("dash")
+            play("dash", { volume: 0.5 })
             SPEEN_ACTIVE = 0
         } else {
         }
@@ -790,7 +753,9 @@ function playercontlv3(x, y, levelIdx, lv) {
     const player = add([ 
         sprite("player", { anim: "idle" }),
         pos(x, y),
-        area(),
+        area({
+            scale: vec2(0.87, 0.9)
+        }),
 		body(),
 		origin("bot"),
     ])
@@ -839,12 +804,12 @@ function playercontlv3(x, y, levelIdx, lv) {
                 DONUT_COUNT = DONUT_COUNT + 1
                 DONUT_LV3 = 1
                 donut.destroy()
-                play("collect")
+                play("collect", { volume: 0.5 })
             } else if (player.isTouching(bee)) {
                 bee.destroy()
                 wait(0.5)
                 player.jump(CONFIG.JUMP_FORCE + 150)
-                play("beehit")
+                play("beehit", { volume: 0.5 })
             } else {
                 player.jump(CONFIG.JUMP_FORCE - 50)
                 play("dash")
@@ -866,7 +831,7 @@ function playercontlv3(x, y, levelIdx, lv) {
         } else {
             player.play("swim")
         }
-        play("ground")
+        play("ground", { volume: 0.5 })
     })
 
     player.onUpdate(() => {
@@ -874,7 +839,7 @@ function playercontlv3(x, y, levelIdx, lv) {
             DONUT_COUNT = DONUT_COUNT + 1
             DONUT_LV3 = 1
             donut.destroy()
-            play("collect")
+            play("collect", { volume: 0.5 })
         } else if (player.pos.y >= 1500) {
             go("screen2", {
                 levelIdx: levelIdx,
@@ -894,12 +859,12 @@ function playercontlv3(x, y, levelIdx, lv) {
 }
 
 function playercontlv4(x, y, levelIdx, lv) {
-    const spawnPoint = vec2(961, 1183)
-
     const player = add([ 
         sprite("player", { anim: "idle" }),
         pos(x, y),
-        area(),
+        area({
+            scale: vec2(0.87, 0.9)
+        }),
 		body(),
 		origin("bot"),
     ])
@@ -957,7 +922,7 @@ function playercontlv4(x, y, levelIdx, lv) {
                 bee.destroy()
                 wait(0.5)
                 player.jump(CONFIG.JUMP_FORCE + 150)
-                play("beehit")
+                play("beehit", { volume: 0.5 })
             } else {
                 player.jump(CONFIG.JUMP_FORCE - 50)
                 play("dash")
@@ -979,12 +944,12 @@ function playercontlv4(x, y, levelIdx, lv) {
         } else {
             player.play("swim")
         }
-        play("ground")
+        play("ground", { volume: 0.5 })
     })
 
     player.onUpdate(() => {
         if (player.isTouching(donutBeeg)) {
-            play("end")
+            play("end", { volume: 0.5 })
             go("end", {
                 levelIdx: levelIdx - levelIdx,
             })
@@ -992,7 +957,7 @@ function playercontlv4(x, y, levelIdx, lv) {
             DONUT_COUNT = DONUT_COUNT + 1
             DONUT_LV4 = 1
             donut.destroy()
-            play("collect")
+            play("collect", { volume: 0.5 })
         } else if (player.pos.y >= 1500) {
             go("screen3", {
                 levelIdx: levelIdx,
@@ -1010,14 +975,12 @@ function titleSeq() {
     const bg = add([
         sprite("backgroundBlurred"),
         pos(width() / 2, height()),
-        area(),
         origin("bot"),
     ])
 
     const gameTitle = add([
         sprite("gameTitle"),
         pos(width() / 2, height() / 2.7),
-        area(),
         origin("bot"),
     ])
 
@@ -1133,10 +1096,10 @@ function titleSeq() {
 }
 
 function loadScreen() {
+    fw.stop()
     const bg = add([
         sprite("black"),
         pos(width() / 2, height()),
-        area(),
         color(0, 0, 0),
         origin("bot"),        
     ])
@@ -1148,7 +1111,6 @@ function loadScreen() {
             align: "center",
         }),
         pos(width() / 2, height() / 2.7),
-        area(),
         origin("bot"),      
     ])
     title.scale = 6
@@ -1156,7 +1118,6 @@ function loadScreen() {
     const b = add([
         sprite("b"),
         pos(width() / 2, height() / 1.7),
-        area(),
         origin("bot"),
     ])
     b.play('idle')
@@ -1199,7 +1160,7 @@ function movementCont(player) {
         if (player.isGrounded()) {
             player.jump(CONFIG.JUMP_FORCE)
             player.play("jump")
-            play("jump")
+            play("jump", { volume: 0.5 })
         }
     })
 }

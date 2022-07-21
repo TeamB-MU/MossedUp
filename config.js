@@ -21,6 +21,7 @@ const CONFIG = {
         "Open Source!",
         "Available on itch.io",
         // I have no idea
+        "Made for PolyJam",
         "We have come",
         "donute",
         "#icharusisoverparty",
@@ -29,6 +30,7 @@ const CONFIG = {
         "polygonal?",
         "pongon no gonpon",
         "ROFL LMAO XD LOL",
+        "Not funny",
         "@joshuaclayton",
         "w   H  A      t",
         "atumalaca kkkkkkkkk",

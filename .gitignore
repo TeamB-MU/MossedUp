@@ -1,2 +1,5 @@
 /MossedUp.zip
 .vscode/
+.githubpassword.txt
+node_modules/
+package-lock.json
