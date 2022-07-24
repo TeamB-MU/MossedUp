@@ -13,6 +13,7 @@ var DONUT_LV4 = 0
 // Import kaboom
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs"
 import CONFIG from "./config.js"
+import MAPS from "./maps.js"
 
 // Initialize Context (Kaboom is based on canvas)
 kaboom({
@@ -254,43 +255,7 @@ scene("credits", () => {
 })
 
 scene("screen1", ({ levelIdx, playerposx }) => {
-    const level = addLevel([
-        '=                                              =',    
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                 == = =                       =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                          = ==                =',    
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=               = = = =                        =',
-        '                =                               ',
-        '=                 = = =                        =',
-        '                                                ',
-        '=                                  ===         =',
-        '                                                ', 
-        '=   =======                                    =',
-        '                                                ',
-        '=                                              =',
-        '                      == = =                    ',
-        '=                               = == = = = = = =',
-        '                                =               ',
-        '=                               =               ',
-        '                                =               ',
-        '  = = = = = = ==                =               ',
-        '               =                =               ',
-        '                                =               ',
-        '             ^ =                =               ',
-        '               ==================               ',
-        '                                                ',
-        '                                                ',
-        '                                                ',
-        '                                                ',
-    ], {
+    const level = addLevel(MAPS.LEVEL_1, {
         width: 32,
         height: 32,
         pos: vec2(-27, 31),
@@ -340,51 +305,7 @@ scene("screen1", ({ levelIdx, playerposx }) => {
 })
 
 scene("screen2", ({ levelIdx, playerposx, playerposy, lv }) => {
-    const level = addLevel([
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                        # # # #                 ',
-        '=                       = = = =                =',
-        '                        = = = =                 ',
-        '=                       = = = =       #######  =',
-        '                                      =======   ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',    
-        '                                        ----    ',
-        '=           -- - -                      = ==   =',
-        '            == = =                              ',
-        '=            =                                 =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                       ##                     =',
-        '                    # # ==                      ', 
-        '=                   = =                        =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '     ##                                         ',
-        '=    ==                   -----                =',
-        '     ==                 -== = =                 ',
-        '=                       -=    =                =',
-        '                                                ',
-        '=                        =    =                =',
-        '                         =                      ',
-        '=                        = = =                 =',
-        '             ^                                  ',
-        '=                                              =',
-    ], {
+    const level = addLevel(MAPS.LEVEL_2, {
         width: 32,
         height: 32,
         pos: vec2(-30, 31),
@@ -424,52 +345,7 @@ scene("screen2", ({ levelIdx, playerposx, playerposy, lv }) => {
 })
 
 scene("screen3", ({ levelIdx, playerposx, playerposy, lv }) => {
-    const level = addLevel([
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '               #####                            ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '   # # #                      - -               ',
-        '=  = = =                  -- -= =              =',    
-        '                          = = = =               ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                # # #                           ', 
-        '=               = = =                          =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                       ---                    =',
-        '                        ===                     ',
-        '=                                              =',
-        '             ^                                  ',
-        '=                                              =',
-    ], {
+    const level = addLevel(MAPS.LEVEL_3, {
         width: 32,
         height: 32,
         pos: vec2(-30, 31),
@@ -507,52 +383,7 @@ scene("screen3", ({ levelIdx, playerposx, playerposy, lv }) => {
 })
 
 scene("screen4", ({ levelIdx, playerposx, playerposy, lv }) => {
-    const level = addLevel([
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                     # # # #                  =',
-        '                      = = = =                   ',
-        '=                                              =',
-        '                       == = =                   ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',    
-        '                                                ',
-        '=          -- - -                              =',
-        '           == = =                               ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                # #             ',
-        '=                               = =            =',
-        '                                                ', 
-        '=                               = =            =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '                                                ',
-        '=                                              =',
-        '    ## # #                                      ',
-        '=   == = =                                     =',
-        '                                                ',
-        '=                                              =',
-        '                              - -               ',
-        '=                             = =              =',
-        '                              = =               ',
-        '=                                              =',
-        '             ^                                  ',
-        '=                                              =',
-    ], {
+    const level = addLevel(MAPS.LEVEL_4, {
         width: 32,
         height: 32,
         pos: vec2(-30, 31),
@@ -592,6 +423,8 @@ scene("screen4", ({ levelIdx, playerposx, playerposy, lv }) => {
 go("title", {
     levelIdx: 0,
 })
+
+// ======================== LEVEL 1 ===========================
 
 function playercontlv1(x, y, levelIdx) {
     const player = add([ 
@@ -661,6 +494,9 @@ function playercontlv1(x, y, levelIdx) {
         }
     })
 }
+
+// ======================== LEVEL 2 ===========================
+
 
 function playercontlv2(x, y, levelIdx, lv) {
     const player = add([ 
@@ -748,6 +584,9 @@ function playercontlv2(x, y, levelIdx, lv) {
         }
     })
 }
+
+// ======================== LEVEL 3 ===========================
+
 
 function playercontlv3(x, y, levelIdx, lv) {
     const player = add([ 
@@ -857,6 +696,8 @@ function playercontlv3(x, y, levelIdx, lv) {
         }
     })
 }
+
+// ======================== LEVEL 4 ===========================
 
 function playercontlv4(x, y, levelIdx, lv) {
     const player = add([ 

@@ -1,0 +1,26 @@
+{
+  "name": "mossedup",
+  "version": "1.0.0",
+  "description": "### Keybinds: - Left Arrow: Move left  - Right Arrow: Move Right - Space: Jump - V: Use dash",
+  "main": "elec.js",
+  "scripts": {
+    "dev": "electron .",
+    "buildlin": "electron-packager ./ MossedUp --platform=linux --arch=x64 --icon=assets/favicon.png",
+    "buildwin": "electron-packager ./ MossedUp --platform=win32 --arch=x64 --icon=assets/favicon.png",
+    "buildmac": "electron-packager ./ MossedUp --platform=mac --arch=x64 --icon=assets/favicon.png"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeamB-MU/MossedUp.git"
+  },
+  "author": "TeamB",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/TeamB-MU/MossedUp/issues"
+  },
+  "homepage": "https://github.com/TeamB-MU/MossedUp#readme",
+  "devDependencies": {
+    "electron": "^19.0.9",
+    "electron-packager": "^15.5.1"
+  }
+}
