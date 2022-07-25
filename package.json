@@ -5,9 +5,9 @@
   "main": "elec.js",
   "scripts": {
     "dev": "electron .",
-    "buildlin": "electron-packager ./ MossedUp --platform=linux --arch=x64 --icon=assets/favicon.png",
-    "buildwin": "electron-packager ./ MossedUp --platform=win32 --arch=x64 --icon=assets/favicon.png",
-    "buildmac": "electron-packager ./ MossedUp --platform=mac --arch=x64 --icon=assets/favicon.png"
+    "buildlin": "electron-packager ./ MossedUp --platform=linux --arch=x64 --icon=assets/icons/linux.png",
+    "buildwin": "electron-packager ./ MossedUp --platform=win32 --arch=x64 --icon=assets/icons/win.ico",
+    "buildmac": "electron-packager ./ MossedUp --platform=mac --arch=x64 --icon=assets/icons/mac.icns"
   },
   "repository": {
     "type": "git",
